@@ -34,7 +34,6 @@ namespace Ordering.API
             services.AddMassTransit(config => {
 
                 config.AddConsumer<BasketCheckoutConsumer>();
-
                 config.UsingRabbitMq((ctx, cfg) => {
                     cfg.Host(Configuration["EventBusSettings:HostAddress"]);
                     cfg.UseHealthCheck(ctx);
