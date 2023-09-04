@@ -31,16 +31,16 @@ namespace Ordering.API
             services.AddInfrastructureServices(Configuration);
 
             // MassTransit-RabbitMQ Configuration
-            services.AddMassTransit(config => {
-
+            services.AddMassTransit(config =>
+            {
                 config.AddConsumer<BasketCheckoutConsumer>();
-                config.UsingRabbitMq((ctx, cfg) => {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
                     cfg.Host(Configuration["EventBusSettings:HostAddress"]);
                     cfg.UseHealthCheck(ctx);
 
-                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c => {
-                        c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
-                    });
+                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue,
+                        c => { c.ConfigureConsumer<BasketCheckoutConsumer>(ctx); });
                 });
             });
             services.AddMassTransitHostedService();
@@ -56,7 +56,7 @@ namespace Ordering.API
             });
 
             services.AddHealthChecks()
-                    .AddDbContextCheck<OrderContext>();
+                .AddDbContextCheck<OrderContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

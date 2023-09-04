@@ -16,21 +16,18 @@ namespace Ordering.API
             CreateHostBuilder(args)
                 .Build()
                 .MigrateDatabase<OrderContext>((context, services) =>
-                    {
-                        var logger = services.GetService<ILogger<OrderContextSeed>>();
-                        OrderContextSeed
-                            .SeedAsync(context, logger)
-                            .Wait();
-                    })
+                {
+                    var logger = services.GetService<ILogger<OrderContextSeed>>();
+                    OrderContextSeed
+                        .SeedAsync(context, logger)
+                        .Wait();
+                })
                 .Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog(SeriLogger.Configure)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Basket.API.Entities
 {
     public class ShoppingCart
     {
         public string UserName { get; set; }
-        public List<ShoppingCartItem> Items { get; set; } = new List<ShoppingCartItem>();
+        public List<ShoppingCartItem> Items { get; set; } = new();
 
         public ShoppingCart()
         {
@@ -15,18 +16,10 @@ namespace Basket.API.Entities
         {
             UserName = userName;
         }
-        
-        public decimal TotalPrice 
-        { 
-            get
-            {
-                decimal totalprice = 0;
-                foreach (var item in Items)
-                {
-                    totalprice += item.Price * item.Quantity;
-                }
-                return totalprice;
-            }
+
+        public decimal TotalPrice
+        {
+            get { return Items.Sum(item => item.Price * item.Quantity); }
         }
     }
 }

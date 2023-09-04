@@ -27,9 +27,12 @@ namespace Discount.Grpc.Services
             var coupon = await _repository.GetDiscount(request.ProductName);
             if (coupon == null)
             {
-                throw new RpcException(new Status(StatusCode.NotFound, $"Discount with ProductName={request.ProductName} is not found."));
+                throw new RpcException(new Status(StatusCode.NotFound,
+                    $"Discount with ProductName={request.ProductName} is not found."));
             }
-            _logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
+
+            _logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}",
+                coupon.ProductName, coupon.Amount);
 
             var couponModel = _mapper.Map<CouponModel>(coupon);
             return couponModel;
@@ -57,7 +60,8 @@ namespace Discount.Grpc.Services
             return couponModel;
         }
 
-        public override async Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
+        public override async Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request,
+            ServerCallContext context)
         {
             var deleted = await _repository.DeleteDiscount(request.ProductName);
             var response = new DeleteDiscountResponse
