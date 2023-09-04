@@ -23,9 +23,9 @@ namespace WebStatus
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
+
             services.AddHealthChecksUI()
-                 .AddInMemoryStorage();
+                .AddInMemoryStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +39,8 @@ namespace WebStatus
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseStaticFiles();            
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -52,7 +53,7 @@ namespace WebStatus
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });            
+            });
         }
     }
 }
