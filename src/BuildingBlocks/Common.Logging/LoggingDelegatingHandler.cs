@@ -16,7 +16,8 @@ namespace Common.Logging
             this.logger = logger;
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -36,7 +37,7 @@ namespace Common.Logging
 
                 return response;
             }
-            catch (HttpRequestException ex) 
+            catch (HttpRequestException ex)
                 when (ex.InnerException is SocketException se && se.SocketErrorCode == SocketError.ConnectionRefused)
             {
                 var hostWithPort = request.RequestUri.IsDefaultPort
@@ -44,8 +45,8 @@ namespace Common.Logging
                     : $"{request.RequestUri.DnsSafeHost}:{request.RequestUri.Port}";
 
                 logger.LogCritical(ex, "Unable to connect to {Host}. Please check the " +
-                                        "configuration to ensure the correct URL for the service " +
-                                        "has been configured.", hostWithPort);
+                                       "configuration to ensure the correct URL for the service " +
+                                       "has been configured.", hostWithPort);
             }
 
             return new HttpResponseMessage(HttpStatusCode.BadGateway)

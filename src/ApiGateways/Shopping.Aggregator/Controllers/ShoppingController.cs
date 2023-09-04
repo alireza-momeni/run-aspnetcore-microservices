@@ -15,7 +15,8 @@ namespace Shopping.Aggregator.Controllers
         private readonly IBasketService _basketService;
         private readonly IOrderService _orderService;
 
-        public ShoppingController(ICatalogService catalogService, IBasketService basketService, IOrderService orderService)
+        public ShoppingController(ICatalogService catalogService, IBasketService basketService,
+            IOrderService orderService)
         {
             _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
@@ -38,7 +39,7 @@ namespace Shopping.Aggregator.Controllers
                 item.Summary = product.Summary;
                 item.Description = product.Description;
                 item.ImageFile = product.ImageFile;
-            }            
+            }
 
             var orders = await _orderService.GetOrdersByUserName(userName);
 
@@ -48,9 +49,8 @@ namespace Shopping.Aggregator.Controllers
                 BasketWithProducts = basket,
                 Orders = orders
             };
-            
+
             return Ok(shoppingModel);
         }
-
     }
 }

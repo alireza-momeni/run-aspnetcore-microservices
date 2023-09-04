@@ -30,10 +30,7 @@ namespace OcelotApiGw
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
             });
 
             await app.UseOcelot();
